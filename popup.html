@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  background-color: #000000;
+  color: #fff;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 10px;
+  width: 300px;
+  height: 200px;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.color-box {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #fff;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.color-codes {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.color-code {
+  padding: 5px;
+  border: 1px solid #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.color-code:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+}
+
+.copy-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.copy-button:hover {
+  background-color: #45a049;
+}
+
+.pick-button {
+  background-color: #2196F3;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.pick-button:hover {
+  background-color: #1976D2;
+}
+
+.copied-tooltip {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="color-box" id="color-preview"></div>
+  <div class="color-codes">
+    <div class="color-code" id="rgb-code" title="Click to copy">RGB(0, 0, 0)</div>
+    <div class="color-code" id="hex-code" title="Click to copy">#000000</div>
+  </div>
+  <div class="button-container">
+    <button class="copy-button" id="copy-rgb">Copy RGB</button>
+    <button class="copy-button" id="copy-hex">Copy HEX</button>
+  </div>
+  <button class="pick-button" id="pick-button">Pick Color</button>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

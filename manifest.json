@@ -1,23 +1,25 @@
 {
-    "manifest_version": 2,
-    "name": "Color Picker",
-    "version": "1.0",
-    "description": "Select colors from your screen and get their RGB, Hex, and HSL values",
-    "permissions": ["activeTab", "clipboardWrite"],
-    "browser_action": {
-      "default_popup": "popup/popup.html"
-    },
-    "background": {
-      "scripts": ["background/background.js"]
-    },
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["content/colorPicker.js"],
-        "css": ["content/colorPicker.css"]
-      }
-    ],
-    "web_accessible_resources": [
-      "assets/*"
-    ]
+  "manifest_version": 2,
+  "name": "Color Picker Extension",
+  "version": "1.0",
+  "description": "Pick colors from anywhere on your screen with live preview",
+  "permissions": [
+    "activeTab",
+    "desktopCapture",
+    "<all_urls>",
+    "tabs"
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   }
+}
