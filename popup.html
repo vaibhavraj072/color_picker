@@ -3,17 +3,47 @@
 <head>
 <style>
 body {
-  background-color: #000000;
+  background-color: #1e1e1e;
   color: #fff;
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 10px;
+  padding: 0;
   width: 300px;
-  height: 200px;
   box-sizing: border-box;
+  user-select: none;
+  position: relative;
+}
+
+.popup-header {
+  background-color: #2c2c2c;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: move;
+}
+
+.popup-title {
+  font-weight: bold;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.close-btn:hover {
+  color: #ff4136;
 }
 
 .container {
+  padding: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,22 +53,26 @@ body {
   width: 100%;
   height: 100px;
   border: 1px solid #fff;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   transition: background-color 0.3s ease;
 }
 
 .color-codes {
   display: flex;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  width: 100%;
+  justify-content: center;
 }
 
 .color-code {
-  padding: 5px;
+  padding: 8px;
   border: 1px solid #fff;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  text-align: center;
+  flex-grow: 1;
 }
 
 .color-code:hover {
@@ -48,18 +82,23 @@ body {
 .button-container {
   display: flex;
   gap: 10px;
+  width: 100%;
+}
+
+.copy-button, .pick-button {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
 }
 
 .copy-button {
   background-color: #4CAF50;
   color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 12px;
-  transition: background-color 0.2s ease;
 }
 
 .copy-button:hover {
@@ -69,14 +108,6 @@ body {
 .pick-button {
   background-color: #2196F3;
   color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
-  margin-top: 10px;
-  transition: background-color 0.2s ease;
 }
 
 .pick-button:hover {
@@ -94,9 +125,17 @@ body {
   opacity: 0;
   transition: opacity 0.2s ease;
 }
+
+.dropper-cursor {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v7m0 0v7m0-7h7m-7 0H5"/><path d="M20 13c0 5.523-4.477 10-10 10S0 18.523 0 13 4.477 3 10 3c5.523 0 10 4.477 10 10z"/></svg>') 16 16, auto !important;
+}
 </style>
 </head>
 <body>
+<div class="popup-header" id="popup-header">
+  <div class="popup-title">Color Picker</div>
+  <button class="close-btn" id="close-btn">&times;</button>
+</div>
 <div class="container">
   <div class="color-box" id="color-preview"></div>
   <div class="color-codes">

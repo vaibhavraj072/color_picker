@@ -2,70 +2,124 @@ document.addEventListener('DOMContentLoaded', () => {
   const colorPreview = document.getElementById('color-preview');
   const rgbCode = document.getElementById('rgb-code');
   const hexCode = document.getElementById('hex-code');
-  const copyRgbBtn = document.getElementById('copy-rgb');
-  const copyHexBtn = document.getElementById('copy-hex');
   const pickButton = document.getElementById('pick-button');
+  const copyRgbButton = document.getElementById('copy-rgb');
+  const copyHexButton = document.getElementById('copy-hex');
+  const popupHeader = document.getElementById('popup-header');
+  const closeBtn = document.getElementById('close-btn');
 
-  // Copy button handlers
-  copyRgbBtn.addEventListener('click', () => copyToClipboard(rgbCode.innerText));
-  copyHexBtn.addEventListener('click', () => copyToClipboard(hexCode.innerText));
+  let currentColor = { rgb: 'RGB(0, 0, 0)', hex: '#000000' };
+  let isDragging = false;
+  let startX, startY, startLeft, startTop;
 
-  // Color picker button handler
+  // Draggable popup functionality
+  popupHeader.addEventListener('mousedown', startDragging);
+  document.addEventListener('mousemove', drag);
+  document.addEventListener('mouseup', stopDragging);
+
+  function startDragging(e) {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      const popupStyle = window.getComputedStyle(document.body);
+      startLeft = parseInt(popupStyle.left || '0');
+      startTop = parseInt(popupStyle.top || '0');
+  }
+
+  function drag(e) {
+      if (!isDragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      
+      document.body.style.position = 'fixed';
+      document.body.style.left = `${startLeft + dx}px`;
+      document.body.style.top = `${startTop + dy}px`;
+  }
+
+  function stopDragging() {
+      isDragging = false;
+  }
+
+  // Close button functionality
+  closeBtn.addEventListener('click', () => {
+      window.close();
+  });
+
+  // Copy to clipboard function
+  function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+          showTooltip('Copied!');
+      }).catch(err => {
+          console.error('Failed to copy: ', err);
+      });
+  }
+
+  // Show temporary tooltip
+  function showTooltip(message) {
+      const tooltip = document.createElement('div');
+      tooltip.classList.add('copied-tooltip');
+      tooltip.textContent = message;
+      tooltip.style.top = `${event.clientY + 10}px`;
+      tooltip.style.left = `${event.clientX + 10}px`;
+      document.body.appendChild(tooltip);
+      
+      setTimeout(() => {
+          tooltip.style.opacity = '1';
+          setTimeout(() => {
+              tooltip.style.opacity = '0';
+              setTimeout(() => {
+                  document.body.removeChild(tooltip);
+              }, 200);
+          }, 1000);
+      }, 10);
+  }
+
+  // Event listeners for copy buttons
+  copyRgbButton.addEventListener('click', () => {
+      copyToClipboard(currentColor.rgb);
+  });
+
+  copyHexButton.addEventListener('click', () => {
+      copyToClipboard(currentColor.hex);
+  });
+
+  // Color code elements copy on click
+  rgbCode.addEventListener('click', () => {
+      copyToClipboard(currentColor.rgb);
+  });
+
+  hexCode.addEventListener('click', () => {
+      copyToClipboard(currentColor.hex);
+  });
+
+  // Pick color button
   pickButton.addEventListener('click', () => {
+      document.body.classList.add('dropper-cursor');
+      
       chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-          chrome.tabs.executeScript(
-              tabs[0].id,
-              {file: 'colorPicker.js'}
-          );
+          chrome.tabs.sendMessage(tabs[0].id, {action: "pickColor"}, (response) => {
+              document.body.classList.remove('dropper-cursor');
+              
+              if (response && response.color) {
+                  // Update UI with picked color
+                  colorPreview.style.backgroundColor = response.color;
+                  
+                  // Convert color to RGB and HEX
+                  const rgbMatch = response.color.match(/\d+/g);
+                  if (rgbMatch) {
+                      currentColor.rgb = `RGB(${rgbMatch[0]}, ${rgbMatch[1]}, ${rgbMatch[2]})`;
+                      currentColor.hex = rgbToHex(parseInt(rgbMatch[0]), parseInt(rgbMatch[1]), parseInt(rgbMatch[2]));
+                      
+                      rgbCode.textContent = currentColor.rgb;
+                      hexCode.textContent = currentColor.hex;
+                  }
+              }
+          });
       });
   });
-});
 
-// Function to copy to clipboard
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text);
-  showCopiedMessage();
-}
-
-// Function to show copied message
-function showCopiedMessage() {
-  const message = document.createElement('div');
-  message.textContent = 'Copied!';
-  message.style.cssText = `
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 5px 10px;
-      border-radius: 3px;
-      font-size: 12px;
-  `;
-  document.body.appendChild(message);
-  setTimeout(() => document.body.removeChild(message), 1000);
-}
-
-// Function to update display
-function updateDisplay(color) {
-  const colorPreview = document.getElementById('color-preview');
-  const rgbCode = document.getElementById('rgb-code');
-  const hexCode = document.getElementById('hex-code');
-  
-  colorPreview.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
-  rgbCode.textContent = `RGB(${color.r}, ${color.g}, ${color.b})`;
-  hexCode.textContent = color.hex;
-}
-
-// Listen for messages from color picker
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === 'preview-update') {
-      updateDisplay(message.color);
-  } else if (message.type === 'color-selected') {
-      updateDisplay(message.color);
-      // Keep popup open for a moment to show final color
-      setTimeout(() => window.close(), 500);
-  } else if (message.type === 'picker-error') {
-      document.getElementById('pick-button').textContent = 'Error - Try Again';
+  // Utility function to convert RGB to HEX
+  function rgbToHex(r, g, b) {
+      return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   }
 });
