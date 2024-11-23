@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
+  <!-- Dropper Body -->
+  <rect x="70" y="40" width="20" height="180" rx="10" ry="10" fill="black" />
+  
+  <!-- Dropper Tip -->
+  <circle cx="80" cy="40" r="10" fill="black" />
+
+  <!-- Dropper Handle -->
+  <rect x="60" y="200" width="40" height="20" rx="5" ry="5" fill="black" />
+  
+  <!-- Drop of Liquid -->
+  <circle cx="80" cy="220" r="8" fill="black" />
+  
+  <!-- Optional: Glowing effect around the liquid -->
+  <circle cx="80" cy="220" r="10" fill="white" opacity="0.2" />
+</svg>
