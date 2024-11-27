@@ -45,6 +45,7 @@ Open Chrome and navigate to chrome://extensions/
 Enable "Developer mode" in the top-right corner
 Click "Load unpacked"
 Select the Color Picker folder
+
 🎯 How to Use
 Install the extension.
 Click the Color Picker icon in your browser toolbar.
@@ -68,6 +69,3 @@ Give a ⭐️ if this project helped you!
 
 <div align="center">
 Made with ❤️ by Vaibhav Raj
-
-</div> ```
-Replace yourusername and Your Name with your actual GitHub username and name. Let me know if you need further edits!
