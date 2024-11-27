@@ -39,4 +39,4 @@ Coming soon!
 
 1. **Get the Code**
    ```bash
-   git clone https://github.com/yourusername/color-picker.git
+   [https://github.com/vaibhavraj072/color_picker]
