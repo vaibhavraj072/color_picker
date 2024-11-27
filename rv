@@ -1,4 +1,4 @@
-(function () {
+(function() {
     // SVG for dropper cursor
     const dropperSVG = `
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" 
@@ -7,11 +7,6 @@
                   d="M12 3v7m0 0v7m0-7h7m-7 0H5m7-7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
         </svg>
     `;
-
-    chrome.runtime.onInstalled.addListener(() => {
-        // Redirect to your portfolio website
-        chrome.tabs.create({ url: "https://vaibhavraj072.github.io/portfolio_vaibhav/" });
-    });
 
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         if (request.action === "Pick Color") {
@@ -56,7 +51,7 @@
                 const color = getColorAtPixel(e);
                 
                 // Send color back to popup
-                sendResponse({ color: color });
+                sendResponse({color: color});
 
                 // Clean up
                 document.body.style.cursor = 'default';
@@ -75,13 +70,13 @@
                     document.removeEventListener('keydown', escapeHandler);
                     document.body.removeChild(cursorElement);
                     document.body.removeChild(previewDiv);
-                    sendResponse({ canceled: true });
+                    sendResponse({canceled: true});
                 }
             };
 
             // Add event listeners
             document.addEventListener('mousemove', mouseMoveHandler);
-            document.addEventListener('click', clickHandler, { once: true });
+            document.addEventListener('click', clickHandler, {once: true});
             document.addEventListener('keydown', escapeHandler);
 
             return true;
