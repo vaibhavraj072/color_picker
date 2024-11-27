@@ -41,26 +41,26 @@ Coming soon!
    ```bash
    git clone https://github.com/vaibhavraj072/color_picker
 Install in Chrome
-Open Chrome and navigate to chrome://extensions/
-Enable "Developer mode" in the top-right corner
-Click "Load unpacked"
-Select the Color Picker folder
+- Open Chrome and navigate to chrome://extensions/
+- Enable "Developer mode" in the top-right corner
+- Click "Load unpacked"
+- Select the Color Picker folder
 
 🎯 How to Use
-Install the extension.
-Click the Color Picker icon in your browser toolbar.
-Hover over any part of your screen to detect a color.
-Click to view the RGB and Hex values of the selected color.
-Copy the values to your clipboard with one click.
+- Install the extension.
+- Click the Color Picker icon in your browser toolbar.
+- Hover over any part of your screen to detect a color.
+- Click to view the RGB and Hex values of the selected color.
+- Copy the values to your clipboard with one click.
 🤝 Contributing
 We love your contributions! Here's how to get started:
 
 Fork the repo.
-Create a new branch (git checkout -b feature/amazing-feature).
-Make your changes.
-Commit (git commit -m 'Add amazing feature').
-Push (git push origin feature/amazing-feature).
-Open a Pull Request.
+- Create a new branch (git checkout -b feature/amazing-feature).
+- Make your changes.
+- Commit (git commit -m 'Add amazing feature').
+- Push (git push origin feature/amazing-feature).
+- Open a Pull Request.
 📝 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
