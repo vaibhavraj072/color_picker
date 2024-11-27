@@ -2,7 +2,7 @@
   
 # Color Picker
 
-![Color Picker Logo](images/icon48.png)
+![Color Picker Logo](icons/icon48.png)
 
 ### Effortless Color Identification
 
